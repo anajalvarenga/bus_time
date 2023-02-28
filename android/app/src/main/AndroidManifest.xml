@@ -2,7 +2,6 @@
     package="com.example.bus_time">
    <application
         android:label="bus_time"
-        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
         <meta-data android:name="com.google.android.geo.API_KEY"

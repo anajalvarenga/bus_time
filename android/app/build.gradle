@@ -27,7 +27,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def segmentWriteKey = properties.getProperty('segment.mapsApiKey')
+def segmentMapsApiKey = properties.getProperty('segment.mapsApiKey')
 
 android {
     compileSdkVersion flutter.compileSdkVersion
