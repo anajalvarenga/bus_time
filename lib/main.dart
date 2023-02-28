@@ -15,14 +15,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Bus Time'),
-          backgroundColor: Colors.blue,
-        ),
-        body: const MapScreen(),
-      ),
+    return const MaterialApp(
+      home: MapScreen(),
     );
   }
 }
