@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../api/directions_repository.dart';
+import '../models/directions_model.dart';
+
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -31,6 +34,17 @@ class _MapScreenState extends State<MapScreen> {
         )
     ),
   ];
+
+  Directions _info = Directions(
+    bounds: LatLngBounds(
+      northeast: const LatLng(0.0, 0.0),
+      southwest: const LatLng(0.0, 0.0),
+    ),
+    polylinePoints: [],
+    totalDistance: '0',
+    totalDuration: '0'
+  );
+
   // created method for getting user current location
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission().then((value){
@@ -46,6 +60,11 @@ class _MapScreenState extends State<MapScreen> {
       print(value.latitude.toString() +" "+value.longitude.toString());
 
       // marker added for current users location
+      // BitmapDescriptor markerbitmap = await BitmapDescriptor.fromAssetImage(
+      //     const ImageConfiguration(),
+      //     "assets/images/bus.png",
+      // );
+
       _markers.add(
           Marker(
             markerId: const MarkerId("2"),
@@ -53,6 +72,7 @@ class _MapScreenState extends State<MapScreen> {
             infoWindow: const InfoWindow(
               title: 'My Current Location',
             ),
+            // icon: markerbitmap,
           )
       );
       print(_markers);
@@ -63,12 +83,19 @@ class _MapScreenState extends State<MapScreen> {
         zoom: 14,
       );
 
+      final directions = await DirectionsRepository()
+        .getDirections(origin: cameraPosition.target, destination: _center.target);
+      setState(() {
+        _info = directions;
+      });
+
       final GoogleMapController controller = await _controller.future;
-      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      controller.animateCamera(CameraUpdate.newLatLngBounds(_info.bounds, 100.0));
       setState(() {
       });
     });
   }
+
   
   @override
   Widget build(BuildContext context) {
@@ -76,14 +103,61 @@ class _MapScreenState extends State<MapScreen> {
       appBar: AppBar(
         title: const Text('Bus Time'),
       ),
-      body: SafeArea(
-        child: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: _center,
-          markers: Set<Marker>.of(_markers),
-          myLocationEnabled: true,
-          compassEnabled: true,
-        ),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          SafeArea(
+            child: GoogleMap(
+              myLocationEnabled: true,
+              compassEnabled: true,
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: _center,
+              markers: Set<Marker>.of(_markers),
+              polylines: {
+                if(_info.polylinePoints.isNotEmpty)
+                  Polyline(
+                    polylineId: const PolylineId('overview_polyline'),
+                    color: Colors.yellow,
+                    width: 5,
+                    points: _info.polylinePoints
+                      .map((e) => LatLng(e.latitude, e.longitude))
+                      .toList(),
+                  )
+              },
+            ),
+          ),
+          if(_info.bounds != LatLngBounds(
+            northeast: const LatLng(0.0, 0.0),
+            southwest: const LatLng(0.0, 0.0),
+          ))
+            Positioned(
+              top:20,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6.0,
+                  horizontal: 12.0,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.yellowAccent,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 2),
+                      blurRadius: 6.0
+                    )
+                  ]
+                ),
+                child: Text(
+                  '${_info.totalDistance}, ${_info.totalDuration}',
+                  style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
       // on pressing floating action button the camera will take to user current location
       floatingActionButton: FloatingActionButton(
