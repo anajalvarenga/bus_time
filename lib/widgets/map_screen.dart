@@ -60,10 +60,10 @@ class _MapScreenState extends State<MapScreen> {
       print(value.latitude.toString() +" "+value.longitude.toString());
 
       // marker added for current users location
-      // BitmapDescriptor markerbitmap = await BitmapDescriptor.fromAssetImage(
-      //     const ImageConfiguration(),
-      //     "assets/images/bus.png",
-      // );
+      BitmapDescriptor markerbitmap = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(),
+          "assets/images/bus.png",
+      );
 
       _markers.add(
           Marker(
@@ -72,7 +72,7 @@ class _MapScreenState extends State<MapScreen> {
             infoWindow: const InfoWindow(
               title: 'My Current Location',
             ),
-            // icon: markerbitmap,
+            icon: markerbitmap,
           )
       );
       print(_markers);
@@ -108,8 +108,8 @@ class _MapScreenState extends State<MapScreen> {
         children: [
           SafeArea(
             child: GoogleMap(
-              myLocationEnabled: true,
-              compassEnabled: true,
+              myLocationEnabled: false,
+              compassEnabled: false,
               onMapCreated: _onMapCreated,
               initialCameraPosition: _center,
               markers: Set<Marker>.of(_markers),
