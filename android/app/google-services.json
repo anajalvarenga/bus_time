@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "43436561811",
+    "project_id": "bus-time-9cb1a",
+    "storage_bucket": "bus-time-9cb1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43436561811:android:2d7421f828dcf472da4466",
+        "android_client_info": {
+          "package_name": "com.example.bus_time"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43436561811-lq2f2k3rcsaub68qpd274spqo7grk19r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3OZOZqyNlvEDU2syFgUZsW4n3P7wAROs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43436561811-lq2f2k3rcsaub68qpd274spqo7grk19r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "43436561811-qkf1tjrhus78m23jt3gdh0e9asp3gv7o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bustime"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
