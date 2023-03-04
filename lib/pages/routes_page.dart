@@ -38,11 +38,11 @@ class RoutesPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      'Origem',
+                      document['bus_stops'][0]['name'],
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
-                      '${document['start'].toDate().hour}:${document['start'].toDate().minute}'
+                      '${document['date_start'].toDate().hour}:${document['date_start'].toDate().minute}'
                     ),
                   ],
                 ),
@@ -61,11 +61,11 @@ class RoutesPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      'Destino',
+                      document['bus_stops'][(document['bus_stops'].length - 1)]['name'],
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
-                      '${document['end'].toDate().hour}:${document['end'].toDate().minute}'
+                      '${document['date_end'].toDate().hour}:${document['date_end'].toDate().minute}'
                     ),
                   ],
                 ),
