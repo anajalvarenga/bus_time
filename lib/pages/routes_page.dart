@@ -6,6 +6,12 @@ class RoutesPage extends StatelessWidget {
   const RoutesPage({super.key});
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+    getCityName(name) {
+      var index = name.indexOf(',');
+      if(index == -1) return name;
+      return name.substring(0, index);
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -38,7 +44,7 @@ class RoutesPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      document['bus_stops'][0]['name'],
+                      getCityName(document['bus_stops'][0]['name']),
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
@@ -61,7 +67,7 @@ class RoutesPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      document['bus_stops'][(document['bus_stops'].length - 1)]['name'],
+                      getCityName(document['bus_stops'][(document['bus_stops'].length - 1)]['name']),
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
