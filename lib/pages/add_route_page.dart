@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_webservice/places.dart';
 
+import '../api/auth.dart';
 import '../models/route_model.dart';
 
 class AddRoutePage extends StatefulWidget {
@@ -21,8 +23,10 @@ class _AddRoutePageState extends State<AddRoutePage> {
   final _endTimeController = TextEditingController();
 
   String googleApiKey = 'AIzaSyCVCLhkQcULS-gCNlg8LGZMX0E--iegw_A';
-  String location = "Adicionar rota"; 
+  String location = "Adicionar ponto de parada"; 
   List<Map<String, dynamic>> busStopList = [];
+
+  final User? _user = Auth().currentUser;
 
   Future createRoute({
     required String company,
@@ -34,10 +38,11 @@ class _AddRoutePageState extends State<AddRoutePage> {
     final docRoute = FirebaseFirestore.instance.collection('route').doc();
     final route = BusRoute(
       id: docRoute.id,
-      driver_id: 'aaaaaaaaaaa id',
+      driver_id: _user?.uid ?? 'id',
       company: company,
       date_start: start,
       date_end: end,
+      current_position: const GeoPoint(0.0, 0.0),
       bus_stops: busStopList,
     );
     final json = route.toJson();
@@ -207,7 +212,7 @@ class _AddRoutePageState extends State<AddRoutePage> {
                       'coordinates': GeoPoint(lat, lng),
                     });
                     setState(() {
-                      location = "Adicionar rota";
+                      location = "Adicionar ponto de parada";
                     });
                 }
               },
@@ -256,6 +261,8 @@ class _AddRoutePageState extends State<AddRoutePage> {
                 final startTime = _startTimeController.text;
                 final end = _endController.text;
                 final endTime = _endTimeController.text;
+
+                if(company == '' || start == '' || startTime == '' || end == '' || endTime == '') return;
                 createRoute(
                   company: company,
                   start: DateTime.parse('$start $startTime'),
