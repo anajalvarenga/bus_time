@@ -14,12 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'BusTime: Mobile',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textButtonTheme: const TextButtonThemeData(
-          style: ButtonStyle(foregroundColor: MaterialStatePropertyAll(Colors.yellowAccent))
-        )
+          style: ButtonStyle(
+            foregroundColor: MaterialStatePropertyAll(Colors.yellowAccent),
+          ),
+        ),
       ),
       home: const WidgetTree(),
     );

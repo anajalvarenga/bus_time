@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import '../api/auth.dart';
+import '../widgets/input_general_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -47,10 +48,7 @@ class _LoginPageState extends State<LoginPage> {
     return const Text('Firebase Auth');
   }
 
-  Widget _entryField(
-    String title,
-    TextEditingController controller
-  ) {
+  Widget _entryField(String title, TextEditingController controller) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -65,21 +63,20 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _submitButton() {
     return ElevatedButton(
-      onPressed: 
-        isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
-      child: Text(isLogin ? 'Login' : 'Register')
-    );
+        onPressed: isLogin
+            ? signInWithEmailAndPassword
+            : createUserWithEmailAndPassword,
+        child: Text(isLogin ? 'Login' : 'Register'));
   }
 
   Widget _loginOrRegisterButton() {
     return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          isLogin = !isLogin;
-        });
-      },
-      child: Text(isLogin ? 'Register instead' : 'Login instead')
-    );
+        onPressed: () {
+          setState(() {
+            isLogin = !isLogin;
+          });
+        },
+        child: Text(isLogin ? 'Register instead' : 'Login instead'));
   }
 
   @override
@@ -96,8 +93,19 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _entryField('E-mail', _controllerEmail),
-            _entryField('Password', _controllerPassword),
+            InputGeneralWidget(
+              title: "E-mail",
+              controller: _controllerEmail,
+              icon: Icons.email,
+              show: false,
+            ),
+            const SizedBox(height: 20.0),
+            InputGeneralWidget(
+              title: "Password",
+              controller: _controllerPassword,
+              icon: Icons.visibility,
+              show: true,
+            ),
             _errorMessage(),
             _submitButton(),
             _loginOrRegisterButton(),
