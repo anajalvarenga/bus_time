@@ -10,8 +10,8 @@ class SubmitGeneralWidget extends StatelessWidget {
     return TextButton(
       onPressed: onPressed as void Function()?,
       style: TextButton.styleFrom(
-        foregroundColor: const Color(0xff0C3A30),
-        backgroundColor: const Color(0xff0C3A30),
+        foregroundColor: const Color(0xff003087),
+        backgroundColor: const Color(0xff003087),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),

@@ -159,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           !isLogin ? 'Registrar' : 'Entrar',
                           style: const TextStyle(
-                            color: Color(0xff0C3A30),
+                            color: Color(0xff003087),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 150,
                 height: 150,
                 decoration: const BoxDecoration(
-                  color: Colors.black,
+                  color: Color(0xff003087),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(150),
                   ),
