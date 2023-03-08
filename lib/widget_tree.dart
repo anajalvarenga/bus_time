@@ -1,5 +1,4 @@
-import 'package:bus_time/pages/routes_page.dart';
-import 'package:bus_time/widgets/map_screen.dart';
+import 'package:bus_time/pages/routes_filter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bus_time/api/auth.dart';
@@ -19,8 +18,8 @@ class _WidgetTreeState extends State<WidgetTree> {
       stream: Auth().authStateChanges,
       builder: (context, snapshot) {
         if(snapshot.hasData) {
-          // return const MapScreen();
-          return RoutesPage();
+          // return RoutesPage();
+          return const RoutesFilter();
         } else {
           return const LoginPage();
         }

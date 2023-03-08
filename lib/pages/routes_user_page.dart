@@ -1,17 +1,28 @@
-import 'package:bus_time/pages/add_route_page.dart';
 import 'package:bus_time/pages/route_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../api/auth.dart';
+class RoutesUserPage extends StatelessWidget {
+  Map<String, dynamic> start;
+  Map<String, dynamic> end;
+  DateTime date;
 
-class RoutesPage extends StatelessWidget {
-  RoutesPage({super.key});
-
-  final User? _user = Auth().currentUser;
+  RoutesUserPage({super.key, required this.start, required this.end, required this.date});
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+    var indexStart = document['bus_stops']
+      .indexWhere((stop) {
+        return stop['name'] == start['name'];
+      });
+    if(indexStart == -1) return Container();
+    
+    var indexEnd = document['bus_stops']
+      .indexWhere((stop) {
+        return stop['name'] == end['name'];
+      });
+    if(indexEnd == -1) return Container();
+    if(indexEnd < indexStart) return Container();
+
     getCityName(name) {
       var index = name.indexOf(',');
       if(index == -1) return name;
@@ -105,7 +116,8 @@ class RoutesPage extends StatelessWidget {
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection("route")
-          .where('driver_id', isEqualTo: _user?.uid).snapshots(),
+          .where('date_start', isGreaterThanOrEqualTo: date)
+          .snapshots(),
         builder: (context, snapshot) {
           if(!snapshot.hasData) return const Text('Loading...');
           return ListView.builder(
@@ -114,16 +126,6 @@ class RoutesPage extends StatelessWidget {
               _buildListItem(context, snapshot.data?.docs[index] as DocumentSnapshot<Object?>),
           );
         }
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const AddRoutePage(),
-            ),
-          );
-        },
-        child: const Icon(Icons.add_location),
       ),
     );
   }
