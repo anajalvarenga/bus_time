@@ -21,14 +21,14 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   static const CameraPosition _center = CameraPosition(
-      target: LatLng(-22.422971, -45.460251),
+      target: LatLng(-23.561125, -46.647842), //hostel 
     zoom: 14.4746,
   );
   // on below line we have created the list of markers
   final List<Marker> _markers = <Marker>[
     const Marker(
         markerId: MarkerId('1'),
-        position: LatLng(-22.422971, -45.460251),
+        position: LatLng(-23.561125, -46.647842),
         infoWindow: InfoWindow(
           title: 'Posição atual',
         )

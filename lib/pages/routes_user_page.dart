@@ -1,4 +1,5 @@
-import 'package:bus_time/pages/route_page.dart';
+import 'package:bus_time/pages/map_test.dart';
+import 'package:bus_time/widgets/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -99,14 +100,15 @@ class RoutesUserPage extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) =>  RoutePage(route_id: document['id']),
+              // builder: (context) =>  const MapPage(),
+              // builder: (context) =>  const MapTest(),
+              builder: (context) =>  const MapScreen(),
             ),
           );
         }
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
