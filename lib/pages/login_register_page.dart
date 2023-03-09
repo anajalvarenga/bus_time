@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _title() {
-    return const Text('Firebase Auth');
+    return const Text('Bus Time');
   }
 
   Widget _entryField(
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
     return ElevatedButton(
       onPressed: 
         isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
-      child: Text(isLogin ? 'Login' : 'Register')
+      child: Text(isLogin ? 'Login' : 'Cadastrar')
     );
   }
 
@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
           isLogin = !isLogin;
         });
       },
-      child: Text(isLogin ? 'Register instead' : 'Login instead')
+      child: Text(isLogin ? 'Mudar para Cadastro' : 'Mudar para Login')
     );
   }
 

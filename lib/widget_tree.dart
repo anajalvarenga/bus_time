@@ -1,3 +1,4 @@
+import 'package:bus_time/pages/navigate_page.dart';
 import 'package:bus_time/pages/routes_filter.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class _WidgetTreeState extends State<WidgetTree> {
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           // return RoutesPage();
-          return const RoutesFilter();
+          return const NavigatePage();
         } else {
           return const LoginPage();
         }
